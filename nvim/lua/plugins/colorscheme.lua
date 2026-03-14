@@ -1,146 +1,110 @@
 return {
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    lazy = false,
-    opts = {
-      transparent_background = true,
-      flavour = "mocha",
-    },
-    integrations = {
-      cmp = true,
-      gitsigns = true,
-      nvimtree = true,
-      treesitter = true,
-      notify = false,
-      mini = {
-        enabled = true,
-        indentscope_color = "",
+    -- {
+    --   "xiyaowong/transparent.nvim",
+    --   config = function()
+    --     require("transparent").setup({
+    --       extra_groups = { -- table/string: additional groups that should be cleared
+    --         "Normal",
+    --         "NormalNC",
+    --         "Comment",
+    --         "Constant",
+    --         "Special",
+    --         "Identifier",
+    --         "Statement",
+    --         "PreProc",
+    --         "Type",
+    --         "Underlined",
+    --         "Todo",
+    --         "String",
+    --         "Function",
+    --         "Conditional",
+    --         "Repeat",
+    --         "Operator",
+    --         "Structure",
+    --         "LineNr",
+    --         "NonText",
+    --         "SignColumn",
+    --         "CursorLineNr",
+    --         "EndOfBuffer",
+    --       },
+    --       exclude_groups = {}, -- table: groups you don't want to clear
+    --     })
+    --   end,
+    -- },
+    {
+      "catppuccin/nvim",
+      name = "catppuccin",
+      priority = 1000,
+      opts = {
+        flavour = "mocha", -- latte, frappe, macchiato, mocha
+        transparent_background = true, -- disables setting the background color.
+        term_colors = true, -- sets terminal colors (e.g. `g:terminal_color_0`)
       },
-      -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
     },
-  },
-  {
-    "miikanissi/modus-themes.nvim",
-    name = "modus",
-    priority = 1000,
-  },
-  {
-    "rebelot/kanagawa.nvim",
-    name = "kanagawa",
-    priority = 1000,
-    opts = {
-      transparent = true,
-      theme = "dragon",
-      overrides = function(colors)
-        local theme = colors.theme
-        return {
-          NormalFloat = { bg = "none" },
-          FloatBorder = { bg = "none" },
-          FloatTitle = { bg = "none" },
-
-          NormalDark = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-
-          LazyNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-          MasonNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-
-          TelescopeTitle = { fg = theme.ui.special, bold = true },
-          TelescopePromptNormal = { bg = theme.ui.bg_p1 },
-          TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
-          TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
-          TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
-          TelescopePreviewNormal = { bg = theme.ui.bg_dim },
-          TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
-
-          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
-          PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
-          PmenuSbar = { bg = theme.ui.bg_m1 },
-          PmenuThumb = { bg = theme.ui.bg_p2 },
-        }
+    {
+      "Alan-TheGentleman/oldworld.nvim",
+      lazy = false,
+      priority = 1000,
+      opts = {},
+    },
+    {
+      "rebelot/kanagawa.nvim",
+      priority = 1000,
+      lazy = true,
+      config = function()
+        require("kanagawa").setup({
+          compile = false, -- enable compiling the colorscheme
+          undercurl = true, -- enable undercurls
+          commentStyle = { italic = true },
+          functionStyle = {},
+          keywordStyle = { italic = true },
+          statementStyle = { bold = true },
+          typeStyle = {},
+          transparent = true, -- do not set background color
+          dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+          terminalColors = true, -- define vim.g.terminal_color_{0,17}
+          colors = { -- add/modify theme and palette colors
+            palette = {},
+            theme = {
+              wave = {},
+              lotus = {},
+              dragon = {},
+              all = {
+                ui = {
+                  bg_gutter = "none", -- set bg color for normal background
+                  bg_sidebar = "none", -- set bg color for sidebar like nvim-tree
+                  bg_float = "none", -- set bg color for floating windows
+                },
+              },
+            },
+          },
+          overrides = function(colors) -- add/modify highlights
+            return {
+              LineNr = { bg = "none" },
+              NormalFloat = { bg = "none" },
+              FloatBorder = { bg = "none" },
+              FloatTitle = { bg = "none" },
+              TelescopeNormal = { bg = "none" },
+              TelescopeBorder = { bg = "none" },
+              LspInfoBorder = { bg = "none" },
+            }
+          end,
+          theme = "wave", -- Load "wave" theme
+          background = { -- map the value of 'background' option to a theme
+            dark = "wave", -- try "dragon" !
+            light = "lotus",
+          },
+        })
       end,
     },
-  },
-  { "rose-pine/neovim", name = "rose-pine" },
-  { "nyoom-engineering/oxocarbon.nvim", name = "oxocarbon" },
-  { "rktjmp/lush.nvim", dependencies = { "mcchrish/zenbones.nvim" } },
-  {
-    "scottmckendry/cyberdream.nvim",
-    lazy = false,
-    priority = 1000,
-  },
-  { "NTBBloodbath/doom-one.nvim", name = "doom-one" },
-  { "AhmedAbdulrahman/aylin.vim", name = "aylin" },
-  {
-    "xiyaowong/transparent.nvim",
-  },
-  {
-    "ribru17/bamboo.nvim",
-    lazy = false,
-  },
-  {
-    "neanias/everforest-nvim",
-    version = false,
-    lazy = false,
-    config = function()
-      require("everforest").setup({
-        background = "soft",
-        italis = true,
-        transparent_background_level = 1,
-        diagnostic_text_highlight = true,
-        diagnostic_virtual_text = "coloured",
-        colours_override = function(palette)
-          palette.bg0 = "#1A1A22"
-        end,
-      })
-    end,
-  },
-  {
-    "loctvl842/monokai-pro.nvim",
-    config = function()
-      require("monokai-pro").setup({
-        transparent_background = true,
-        filter = "machine",
-      })
-    end,
-  },
-  {
-    "dgox16/oldworld.nvim",
-    lazy = false,
-    priority = 1000,
-  },
-  -- {
-  --   "sainnhe/everforest",
-  --   lazy = false,
-  --   priority = 1000,
-  --
-  --   config = function()
-  --     -- Optionally configure and load the colorscheme
-  --     -- directly inside the plugin declaration.
-  --     vim.g.everforest_enable_italic = true
-  --     vim.g.transparent_background_level = 2
-  --     vim.cmd.colorscheme("everforest")
-  --   end,
-  -- },
-  {
-    "tomasiser/vim-code-dark",
-    lazy = false,
-    priority = 1000,
-    -- config = {
-    --   transparent = true,
-    --   codedark_transparent = 0,
-    -- },
-    -- config = function()
-    --   require("vim-code-dark").setup({
-    --     transparent = true,
-    --     codedark_transparent = 0,
-    --   })
-    -- end,
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      -- change this line to change the color scheme
-      colorscheme = "codedark",
+    {
+      -- LazyVim configuration
+      "LazyVim/LazyVim",
+      opts = {
+        -- Set the default color scheme
+        colorscheme = "kanagawa",
+      },
     },
   },
 }

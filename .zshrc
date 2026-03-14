@@ -1,124 +1,126 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/archer/.oh-my-zsh"
+theme="cloud"
+export ZSH="$HOME/.oh-my-zsh"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
+if [[ $- == *i* ]]; then
+    # Commands to run in interactive sessions can go here
+fi
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="cloud"
+export LS_COLORS="di=38;5;67:ow=48;5;60:ex=38;5;132:ln=38;5;144:*.tar=38;5;180:*.zip=38;5;180:*.jpg=38;5;175:*.png=38;5;175:*.mp3=38;5;175:*.wav=38;5;175:*.txt=38;5;223:*.sh=38;5;132"
+if [[ "$(uname)" == "Darwin" ]]; then
+  alias ls='ls --color=auto'
+else
+  alias ls='gls --color=auto'
+fi
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+if [[ "$(uname)" == "Darwin" ]]; then
+    # macOS
+    BREW_BIN="/opt/homebrew/bin"
+else
+    # Linux
+    BREW_BIN="/home/linuxbrew/.linuxbrew/bin"
+fi
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+# Usar la variable BREW_BIN donde se necesite
+eval "$($BREW_BIN/brew shellenv)"
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+source $(dirname $BREW_BIN)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source $(dirname $BREW_BIN)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $(dirname $BREW_BIN)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(dirname $BREW_BIN)/share/powerlevel10k/powerlevel10k.zsh-theme
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+export PROJECT_PATHS="/home/rhood/Work"
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+export FZF_DEFAULT_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exlude .git"
 
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+#WM_VAR="/$TMUX"
+# change with ZELLIJ
+#WM_CMD="tmux"
+# change with zellij
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+function start_if_needed() {
+    if [[ $- == *i* ]] && [[ -z "${WM_VAR#/}" ]] && [[ -t 1 ]]; then
+        exec $WM_CMD
+    fi
+}
 
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git pj branch fzf-zsh-plugin)
-
-source $ZSH/oh-my-zsh.sh
-
-#PATH_PROYECT
-export PROJECT_PATHS=(~/Documents/projects)
-#export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
-#export FZF_DEFAULT_T_COMMAND="$FZF_DEFAULT_COMMAND"
-#export FZF_ALT_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exlude .git"
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
-alias tmuxconfig="vim ~/.tmux.conf"
+# alias
 alias fzfbat='fzf --preview="bat --theme=gruvbox-dark --color=always {}"'
 alias fzfnvim='nvim $(fzf --preview="bat --theme=gruvbox-dark --color=always {}")'
 
-eval "$(fzf --zsh)"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+#plugins
+plugins=(
+  command-not-found
+  git
+  pj
+)
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export FLYCTL_INSTALL="/home/archer/.fly"
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
+source $ZSH/oh-my-zsh.sh
+
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
+eval "$(fzf --zsh)"
+eval "$(zoxide init zsh)"
+eval "$(atuin init zsh)"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Keybindings para borrar palabras con Ctrl+Backspace
+bindkey '^H' backward-kill-word
+bindkey '^[[3;5~' backward-kill-word
+bindkey '^[[127;5u' backward-kill-word
+
+start_if_needed
+eval "$(zoxide init zsh)"
+
+# Función para crear sesiones de tmux con z
+# Uso: tz nombre_proyecto
+function tz() {
+    if [ -z "$1" ]; then
+        echo "Uso: tz <nombre_proyecto>"
+        return 1
+    fi
+
+    local session_name="$1"
+
+    # Obtener el directorio del proyecto usando zoxide query
+    local project_dir="$(zoxide query "$session_name" 2>/dev/null)"
+
+    if [ -z "$project_dir" ]; then
+        echo "Error: No se encontró el proyecto '$session_name' en zoxide"
+        return 1
+    fi
+
+    # Verificar si ya estamos dentro de tmux
+    if [ -n "$TMUX" ]; then
+        # Si estamos dentro de tmux, verificar si la sesión existe
+        if tmux has-session -t "$session_name" 2>/dev/null; then
+            # Cambiar a la sesión existente
+            tmux switch-client -t "$session_name"
+        else
+            # Crear una nueva sesión en el directorio del proyecto (desconectada)
+            tmux new-session -d -s "$session_name" -c "$project_dir"
+            # Cambiar a la nueva sesión
+            tmux switch-client -t "$session_name"
+        fi
+    else
+        # Si estamos fuera de tmux
+        if tmux has-session -t "$session_name" 2>/dev/null; then
+            # Adjuntarse a la sesión existente
+            tmux attach-session -t "$session_name"
+        else
+            # Crear y adjuntarse a una nueva sesión en el directorio del proyecto
+            tmux new-session -s "$session_name" -c "$project_dir"
+        fi
+    fi
+}

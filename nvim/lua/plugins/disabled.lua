@@ -1,22 +1,26 @@
+-- This file contains the configuration for disabling specific Neovim plugins.
+
 return {
   {
+    -- Plugin: bufferline.nvim
+    -- URL: https://github.com/akinsho/bufferline.nvim
+    -- Description: A snazzy buffer line (with tabpage integration) for Neovim.
     "akinsho/bufferline.nvim",
-    enabled = false,
+    enabled = false, -- Disable this plugin
   },
-  {
-    "iamcco/markdown-preview.nvim",
-    enabled = false,
-  },
-  {
-    "github/copilot.vim", -- Load the GitHub Copilot plugin
-    --enabled = false,
-  },
+  -- {
+  --   -- Plugin para mejorar la experiencia de edición en Neovim
+  --   -- URL: https://github.com/yetone/avante.nvim
+  --   -- Description: Este plugin ofrece una serie de mejoras y herramientas para optimizar la edición de texto en Neovim.
+  --   "yetone/avante.nvim",
+  --   enabled = false,
+  -- },
   {
     "yetone/avante.nvim",
     enabled = false,
   },
   {
-    "Exafunction/codeium.nvim",
+    "CopilotC-Nvim/CopilotChat.nvim",
     enabled = false,
   },
 }
